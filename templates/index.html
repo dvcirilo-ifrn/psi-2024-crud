@@ -1,76 +1,67 @@
-{% extends "base.html" %}
-{% load static %}
+<!-- index.html -->
+{% extends 'base.html' %}
+
+{% block title %}
+  Lista de Livros
+{% endblock %}
+
 {% block content %}
-<h1>Livros</h1>
-<div class="container">
-    <div>
-    {% if perms.app.add_livro %}
-        <a href="{% url 'criar' %}">
-            <button class="btn btn-primary">
-                Novo Livro
-            </button>
-        </a>
-    {% endif %}
+  <section class="content-header">
+    <div class="container-fluid">
+      <h1>Lista de Livros</h1>
     </div>
-    <div>
-    <table class="table table-striped table-hover">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Título</th>
-            <th scope="col">Autor</th>
-            <th scope="col">Ano</th>
-            <th scope="col">Gênero</th>
-            <th scope="col">Num. Cópias</th>
-            {% if request.user.is_authenticated %}
-            <th scope="col">Opções</th>
-            {% endif %}
-        </tr>
-        </thead>
-        <tbody>
-        {% for livro in livros %}
-            <tr>
-                <th scope="row">{{ livro.id }}</th>
-                <td>{{ livro.titulo }}</td>
-                <td>{{ livro.autor }}</td>
-                <td>{{ livro.ano }}</td>
-                <td>{{ livro.genero }}</td>
-                <td> - </td>
-                <td>
-                    {% if perms.app.edit_livro %}
-                    <a href="{% url 'editar' livro.id %}" class="btn btn-primary">
-                        Editar
-                    </a>
-                    {% endif %}
-                    {% if perms.app.delete_livro %}
-                    <a href="{% url 'remover' livro.id %}" class="btn btn-danger">
-                        Excluir
-                    </a>
-                    {% endif %}
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <div class="pagination">
-        <span class="step-links">
-            {% if livros.has_previous %}
-                <a href="?pagina=1">&laquo; Início</a>
-                <a href="?pagina={{ livros.previous_page_number }}">anterior</a>
-            {% endif %}
-    
-            <span class="current">
-                Página {{ livros.number }} de {{ livros.paginator.num_pages }}.
-            </span>
-    
-            {% if livros.has_next %}
-                <a href="?pagina={{ livros.next_page_number }}">próxima</a>
-                <a href="?pagina={{ livros.paginator.num_pages }}">última &raquo;</a>
-            {% endif %}
-        </span>
-    </div>
-</div>
+  </section>
 
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card border-0 shadow-lg">
+            <div class="card-body">
+              {% if perms.app.add_livro %}
+                <a href="{% url 'criar' %}" class="btn btn-primary mb-3">Novo Livro</a>
+              {% endif %}
+              <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Título</th>
+                      <th>Autor</th>
+                      <th>Ano</th>
+                      <th>Gênero</th>
+                      <th>Num. Cópias</th>
+                      {% if request.user.is_authenticated %}
+                        <th>Opções</th>
+                      {% endif %}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for livro in livros %}
+                      <tr>
+                        <th>{{ livro.id }}</th>
+                        <td>{{ livro.titulo }}</td>
+                        <td>{{ livro.autor }}</td>
+                        <td>{{ livro.ano }}</td>
+                        <td>{{ livro.genero }}</td>
+                        <td>-</td>
+                        <td>
+                          {% if perms.app.edit_livro %}
+                            <a href="{% url 'editar' livro.id %}" class="btn btn-warning text-white">Editar</a>
+                          {% endif %}
+                          {% if perms.app.delete_livro %}
+                            <a href="{% url 'remover' livro.id %}" class="btn btn-danger">Excluir</a>
+                          {% endif %}
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-{% endblock content %}
+  </section>
+{% endblock %}
