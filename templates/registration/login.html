@@ -1,12 +1,10 @@
 {% extends "registration/auth_base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-  <form method="POST">
-    {% csrf_token %}
-    <h1 class="h3 mb-3 fw-normal">Faça o login</h1>
-    {{ form | crispy }}
-
-    <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
-  </form>
-
+<form method="POST" style="width: 550px;" class="bg-body-secondary rounded-4 p-3">
+  {% csrf_token %}
+  <h1 class="h3 mb-3 fw-normal text-center">Faça o login</h1>
+  {{ form | crispy }}
+  <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+</form>
 {% endblock content %}
